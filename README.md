@@ -1,66 +1,42 @@
-# Group-project-
-This repository will be for our group project 
-
 <?php
-define("DB_SERVER", "localhost");
-define("DB_USER", "bfarroll");
-define("DB_PASS", "AWD4CY4DQQs=");
-define("DB_NAME", "bfarroll");
-
-
-
-$connection = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
-
-if(mysqli_connect_errno()) 
-
-{
-die("Database connection failed: " . 
-mysqli_connect_error() . 
-" (" . mysqli_connect_errno() . ")"
-);
-}
-
+	//Start session
+	session_start();	
+	//Unset the variables stored in session
+	unset($_SESSION['SESS_MEMBER_ID']);
+	unset($_SESSION['SESS_FIRST_NAME']);
+	unset($_SESSION['SESS_LAST_NAME']);
 ?>
 
-<?php
-
-$query ="SELECT FROM * users " ;
-$result = mysqli_query ($connect , $query)); 
-
-if (!$result) {
-    
-    
-}
-
-
-?>
-
-<?php
-
- function redirectTo($newlocation) {
-     header("Location: " . $newlocation);
-     exit;
- }
-
-?>
-
-<?php
- session_start(); 
-
-function message () {
-    if(isset($_SESSION["message"])) {
-        $output = "<div class=\"message-box\">";
-        
-        $output .= $_SESSION["message"]; 
-        $output .= "</div>";
-        
-        $_SESSION["message"] = null;
-            
-            return $output;
-        
-    } 
-    
-}
-
-?>
-
+<body>
+<form name="loginform" action="login_exec.php" method="post">
+<table width="309" border="0" align="center" cellpadding="2" cellspacing="5">
+  <tr>
+    <td colspan="2">
+		<!--the code bellow is used to display the message of the input validation-->
+		 <?php
+			if( isset($_SESSION['ERRMSG_ARR']) && is_array($_SESSION['ERRMSG_ARR']) && count($_SESSION['ERRMSG_ARR']) >0 ) {
+			echo '<ul class="err">';
+			foreach($_SESSION['ERRMSG_ARR'] as $msg) {
+				echo '<li>',$msg,'</li>'; 
+				}
+			echo '</ul>';
+			unset($_SESSION['ERRMSG_ARR']);
+			}
+		?>
+	</td>
+  </tr>
+  <tr>
+    <td width="116"><div align="right">Username</div></td>
+    <td width="177"><input name="username" type="text" /></td>
+  </tr>
+  <tr>
+    <td><div align="right">Password</div></td>
+    <td><input name="password" type="text" /></td>
+  </tr>
+  <tr>
+    <td><div align="right"></div></td>
+    <td><input name="" type="submit" value="login" /></td>
+  </tr>
+</table>
+</form>
+</body>
